@@ -6,28 +6,43 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity wallet_id #lightyellow {
-  *uuid : UUID <<generated>>
+entity wallet #lightyellow {
+  *id : UUID <<generated>>
   --
   *name : String
   description : String
-  seed: base58 encoded bytes
+  *seed: base58 encoded bytes
 }
 
 entity "identity_evidence" as identity #lightyellow {
   *uuid : UUID <<generated>>
   --
-  evidence_type
+  *evidence_type
   ...
 }
 
 entity account #lightyellow {
-  account_id : uint32
+  *account_id : int32
+  --
+  description: String
+  alias: String
 }
 
 entity "address" as addr #lightyellow {
-  *addressId : base58
+  *address_index: int32
   --
+  *addressId : base58
+  *"public_key" : base58
+  *"private_key" : base58
+  description : String
+}
+
+entity "foreign_address" as foreign #lightyellow {
+  *address_index: int32
+  --
+  *addressId : base58
+  *"public_key" : base58
+  *wallet: UUID
   description : String
 }
 
@@ -35,20 +50,16 @@ entity "proposition" as prop #lightyellow {
   *"proposition_hash" : base58
 }
 
-entity "incomplete_solution" as insol #lightyellow {
+entity "incomplete_proof" as proof #lightyellow {
   *"proposition_hash" : base58
 }
 
-entity "key_pair" as kp #lightyellow {
-  --
-  *"public_key" : base58
-  *"private_key" : base58
-}
-
-wallet_id ||.o{ identity
-wallet_id |o..o{ account
-account |o..o{ addr : "Collection of\nsingle use addresses\n"
-addr }|..o| prop
-addr ||..o| insol
-addr ||.o| kp
+foreign }o.|| wallet
+wallet ||.o{ identity
+wallet |o..o{ account
+account |o...o{ addr : "Collection of\nsingle use\naddresses"
+addr ||..o| prop
+proof |o.||addr
+foreign ||..o| prop
+foreign ||..o| proof
 @enduml
