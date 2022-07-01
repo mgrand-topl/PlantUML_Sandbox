@@ -26,6 +26,7 @@ entity account #lightyellow {
   --
   description: String
   alias: String
+  address_index: int32
 }
 
 entity "address" as addr #lightyellow {
