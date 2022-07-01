@@ -21,6 +21,10 @@ entity "identity_evidence" as identity #lightyellow {
   ...
 }
 
+entity account #lightyellow {
+  account_id : uint32
+}
+
 entity "address" as addr #lightyellow {
   *addressId : base58
   --
@@ -42,7 +46,8 @@ entity "key_pair" as kp #lightyellow {
 }
 
 wallet_id ||.o{ identity
-wallet_id |o..o{ addr : "Collection of\nsingle use addresses\n"
+wallet_id |o..o{ account
+account |o..o{ addr : "Collection of\nsingle use addresses\n"
 addr }|..o| prop
 addr ||..o| insol
 addr ||.o| kp
