@@ -15,7 +15,7 @@ entity wallet #lightyellow {
 }
 
 entity "identity_evidence" as identity #lightyellow {
-  *uuid : UUID <<generated>>
+  *id : UUID <<generated>>
   --
   *evidence_type
   ...
