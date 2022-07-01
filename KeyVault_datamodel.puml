@@ -32,7 +32,7 @@ entity account #lightyellow {
 entity "address" as addr #lightyellow {
   *address_index: int32
   --
-  *addressId : base58
+  *address_id : base58
   *"public_key" : base58
   *"private_key" : base58
   description : String
