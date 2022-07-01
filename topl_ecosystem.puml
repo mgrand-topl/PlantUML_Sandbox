@@ -1,0 +1,77 @@
+@startuml
+skinparam backgroundcolor #f0ffff
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 1
+skinparam titleBorderColor DarkBlue
+skinparam titleBackgroundColor Aqua-CadetBlue
+skinparam titleFontSize 18
+skinparam legendBackgroundColor Beige
+
+title Topl Ecosystem
+node "Bifrost (blockchain node)" as bifrost %lighten("LightGreen", 15) {
+  component "Smart\nContract\nExecution" as execution #lightgreen
+  component "Tetra\n(blockchain protocol)" as tetra #business
+  component "Dion\n(blockchain protocol)" as dion #lightgreen
+
+  interface "Dion\nAPI" as dion_api #lightgreen
+  interface "Tetra\nAPI" as tetra_api #business
+
+  component "levelDB" as ledger #LightCyan
+
+  component "Brambl\n(client\nlibrary)" as b1 #lightgreen
+  ledger -- dion
+  ledger -- tetra
+  ledger - execution
+}
+
+node "Ribn (wallet)" as ribn %lighten("LightGreen", 15) {
+  component SDK #LightYellow {
+    component "Brambl\n(client\nlibrary)" as b2 #lightgreen
+  }
+}
+
+ribn - dion_api
+ribn - tetra_api
+ribn -[hidden] bifrost
+
+node "DAML\n(inbound integration\nwith databases and other blochains)" as DAML #LightYellow {
+  component "Brambl (client library)" as b3 #lightgreen
+}
+dion_api -- DAML
+tetra_api -- DAML
+
+dion -- dion_api
+tetra -- tetra_api
+
+node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("LightYellow", 2) {
+  component "Chain Replicator" as replicator #LightYellow
+  interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
+  interface "Genus\nblock\nAPI" as block_api #pink
+  database "MongoDb\ntransaction\nmirror" as MongoDb #LightCyan
+  database "Graph\ndatabase\nblock mirror" as gdb #LightCyan
+  component RabitMQ  #LightCyan
+  component Kafka  #LightCyan
+  component "Other JMS\nmessage queue"  #LightCyan
+  component "Brambl\n(client\nlibrary)" as b4 #lightgreen
+  replicator -- gdb
+  replicator -- MongoDb
+}
+
+dion_api -- replicator
+tetra_api -- replicator
+
+
+node "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
+
+annulus -- genus_api
+annulus -- block_api
+execution -[hidden] DAML
+
+legend bottom left
+  | Color | Status |
+  | <#LightGreen>| Exists now |
+  | <#business>| Under development |
+  | <#pink> | Future |
+  | <#lightCyan> | Externally Sourced |
+end legend
+@enduml

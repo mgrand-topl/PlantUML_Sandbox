@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+node "SDK" #lightyellow {
+  interface "genus\ninterface" as genus
+  interface "blockchain\ninterface" as block
+  [brambl] #lightgreen
+  [wallet] #lightgreen
+  genus -- [brambl]
+  block --[brambl]
+  block -- [wallet]
+  [wallet] -- keyvault
+}
+
+database "Keyvault File" as keyvault {
+}
+
+@enduml

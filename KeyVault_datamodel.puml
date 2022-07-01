@@ -1,0 +1,40 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity wallet_id #lightyellow {
+  *uuid : UUID <<generated>>
+  --
+  *name : String
+  description : String
+}
+
+entity "address" as addr #lightyellow {
+  *addressId : base58
+  --
+  description : String
+}
+
+entity "proposition" as prop #lightyellow {
+  *"proposition_hash" : base58
+}
+
+entity "incomplete_solution" as insol #lightyellow {
+  *"proposition_hash" : base58
+}
+
+entity "key_pair" as kp #lightyellow {
+  --
+  *"public_key" : base58
+  *"private_key" : base58
+}
+
+wallet_id |o..o{ addr : "Collection of\nsingle use addresses\n"
+addr }|..o| prop
+addr ||..o| insol
+addr ||.o| kp
+@enduml
