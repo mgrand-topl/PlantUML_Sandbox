@@ -29,6 +29,11 @@ entity account #lightyellow {
   address_index: int32
 }
 
+entity asset_class #lightyellow {
+    * account_id : int32
+    * asset_class_id : String
+}
+
 entity "address" as addr #lightyellow {
   *address_index: int32
   --
@@ -55,10 +60,12 @@ entity "incomplete_proof" as proof #lightyellow {
   *"proposition_hash" : base58
 }
 
-foreign }o.|| wallet
+foreign }o..|{ addr
 wallet ||.o{ identity
 wallet |o..o{ account
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
+account ||.o{ asset_class
+asset_class |o..|| addr
 addr ||..o| prop
 proof |o.||addr
 foreign ||..o| prop
