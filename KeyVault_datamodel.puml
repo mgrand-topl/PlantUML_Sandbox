@@ -6,7 +6,11 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity wallet #lightyellow {
+skinparam class {
+  BackgroundColor LightYellow
+}
+
+entity wallet {
   *id : UUID <<generated>>
   --
   *name : String
@@ -14,27 +18,30 @@ entity wallet #lightyellow {
   *seed: base58 encoded bytes
 }
 
-entity "identity_evidence" as identity #lightyellow {
+entity "identity_evidence" as identity {
   *id : UUID <<generated>>
   --
   *evidence_type
   ...
 }
 
-entity account #lightyellow {
+entity account  {
   *account_id : int32
   --
   description: String
-  alias: String
   address_index: int32
 }
 
-entity asset_class #lightyellow {
+entity account_alias {
+  * alias : String
+}
+
+entity asset_class  {
     * account_id : int32
     * asset_class_id : String
 }
 
-entity "address" as addr #lightyellow {
+entity "address" as addr  {
   *address_index: int32
   --
   *address_id : base58
@@ -43,7 +50,7 @@ entity "address" as addr #lightyellow {
   description : String
 }
 
-entity "foreign_address" as foreign #lightyellow {
+entity "foreign_address" as foreign  {
   *address_index: int32
   --
   *addressId : base58
@@ -52,17 +59,19 @@ entity "foreign_address" as foreign #lightyellow {
   description : String
 }
 
-entity "proposition" as prop #lightyellow {
+entity "proposition" as prop  {
   *"proposition_hash" : base58
 }
 
-entity "incomplete_proof" as proof #lightyellow {
+entity "incomplete_proof" as proof  {
   *"proposition_hash" : base58
 }
 
 foreign }o..|{ addr
 wallet ||.o{ identity
-wallet |o..o{ account
+wallet ||..o{ account
+wallet ||..o{account_alias
+account||.o{account_alias
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
 account ||.o{ asset_class
 asset_class |o..|| addr
