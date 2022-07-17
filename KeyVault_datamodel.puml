@@ -68,7 +68,7 @@ entity "incomplete_proof" as proof  {
 }
 
 foreign }o..|{ addr
-wallet ||.o{ identity
+identity }o.|| wallet
 wallet ||..o{ account
 wallet ||..o{account_alias
 account||.o{account_alias
