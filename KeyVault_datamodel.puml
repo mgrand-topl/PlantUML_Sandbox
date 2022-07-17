@@ -31,7 +31,8 @@ entity foreign_wallet {
   --
   *uri: String
   description: String
-  verification_key: String
+  * signature_algorithm: String
+  * verification_key: String
 }
 
 entity account  {
