@@ -11,7 +11,7 @@ skinparam class {
 }
 
 entity wallet {
-  *id : UUID <<generated>>
+  *id : byte[32]
   --
   *name : String
   description : String
