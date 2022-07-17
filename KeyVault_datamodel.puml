@@ -37,8 +37,12 @@ entity account_alias {
 }
 
 entity asset_class  {
-    * account_id : int32
     * asset_class_id : String
+}
+
+entity asset_quantity {
+    ---
+    quantity : Int128
 }
 
 entity "address" as addr  {
@@ -73,8 +77,9 @@ wallet ||..o{ account
 wallet ||..o{account_alias
 account||.o{account_alias
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
-account ||.o{ asset_class
-asset_class |o..|| addr
+asset_class }o.|| account
+asset_class ||..o{ asset_quantity
+asset_quantity }|..|| addr
 addr ||..o| prop
 proof |o.||addr
 foreign ||..o| prop
