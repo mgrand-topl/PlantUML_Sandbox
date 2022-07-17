@@ -15,6 +15,7 @@ entity wallet {
   --
   *name : String
   description : String
+  wallet_type: String
   *seed: base58 encoded bytes
 }
 
@@ -23,6 +24,14 @@ entity "identity_evidence" as identity {
   --
   *evidence_type
   ...
+}
+
+entity foreign_wallet {
+  *id: byte[32]
+  --
+  *uri: String
+  description: String
+  verification_key: String
 }
 
 entity account  {
@@ -72,9 +81,11 @@ entity "incomplete_proof" as proof  {
 }
 
 foreign }o..|{ addr
-identity }o.|| wallet
+wallet ||.o{ identity
 wallet ||..o{ account
 wallet ||..o{account_alias
+foreign_wallet }o.|| wallet
+foreign_wallet ||..o{ foreign
 account||.o{account_alias
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
 asset_class }o.|| account
