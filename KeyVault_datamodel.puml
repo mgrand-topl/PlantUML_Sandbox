@@ -74,6 +74,8 @@ entity "foreign_address" as foreign  {
 
 entity "proposition" as prop  {
   *"proposition_hash" : base58
+  --
+  *proposition_json : String
 }
 
 entity "incomplete_proof" as proof  {
