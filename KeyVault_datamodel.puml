@@ -69,7 +69,6 @@ entity "foreign_address" as foreign  {
   --
   *addressId : base58
   *"public_key" : base58
-  *wallet: UUID
   description : String
 }
 
