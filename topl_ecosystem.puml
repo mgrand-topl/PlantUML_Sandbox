@@ -25,13 +25,15 @@ node "Bifrost (blockchain node)" as bifrost %lighten("LightGreen", 15) {
 }
 
 node "Ribn (wallet)" as ribn %lighten("LightGreen", 15) {
+  component "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
+
   component SDK #LightYellow {
     component "Brambl\n(client\nlibrary)" as b2 #lightgreen
   }
 }
 
-ribn - dion_api
-ribn - tetra_api
+SDK - dion_api
+SDK - tetra_api
 ribn -[hidden] bifrost
 
 node "DAML\n(inbound integration\nwith databases and other blochains)" as DAML #LightYellow {
@@ -68,9 +70,6 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
 
 dion_api -- replicator
 tetra_api -- replicator
-
-
-node "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
 
 annulus -- genus_api
 annulus -- block_api
