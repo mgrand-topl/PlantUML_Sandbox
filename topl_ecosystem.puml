@@ -50,9 +50,11 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   interface "Genus\nblock\nAPI" as block_api #pink
   database "MongoDb\ntransaction\nmirror" as MongoDb #LightCyan
   database "Graph\ndatabase\nblock mirror" as gdb #LightCyan
-  component RabitMQ  #LightCyan
-  component Kafka  #LightCyan
-  component "Other JMS\nmessage queue"  #LightCyan
+  component subscription_manager #LightYellow {
+    component RabitMQ  #LightCyan
+    component Kafka  #LightCyan
+    component "Other JMS\nmessage queue"  #LightCyan
+  }
   component "Brambl\n(client\nlibrary)" as b4 #lightgreen
   replicator -- gdb
   extractor - replicator
@@ -68,6 +70,7 @@ node "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
 annulus -- genus_api
 annulus -- block_api
 block_api -- replicator
+genus_api -- extractor
 execution -[hidden] DAML
 
 legend bottom left
