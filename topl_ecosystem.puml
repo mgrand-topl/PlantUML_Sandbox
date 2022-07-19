@@ -46,6 +46,7 @@ tetra -- tetra_api
 node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("LightYellow", 2) {
   component "Chain Replicator" as replicator #LightYellow
   component "Transaction Extractor" as extractor #LightYellow
+  interface "Genus\nsubscription\nAPI" as subscription #pink
   interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
   interface "Genus\nblock\nAPI" as block_api #pink
   database "MongoDb\ntransaction\nmirror" as MongoDb #LightCyan
@@ -56,6 +57,7 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
     component "Other JMS\nmessage queue"  #LightCyan
   }
   component "Brambl\n(client\nlibrary)" as b4 #lightgreen
+  subscription -- subscription_manager
   replicator -- gdb
   extractor - replicator
   extractor -- MongoDb
