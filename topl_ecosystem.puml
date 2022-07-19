@@ -45,6 +45,7 @@ tetra -- tetra_api
 
 node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("LightYellow", 2) {
   component "Chain Replicator" as replicator #LightYellow
+  component "Transaction Extractor" as extractor #LightYellow
   interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
   interface "Genus\nblock\nAPI" as block_api #pink
   database "MongoDb\ntransaction\nmirror" as MongoDb #LightCyan
@@ -54,7 +55,8 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   component "Other JMS\nmessage queue"  #LightCyan
   component "Brambl\n(client\nlibrary)" as b4 #lightgreen
   replicator -- gdb
-  replicator -- MongoDb
+  extractor - replicator
+  extractor -- MongoDb
 }
 
 dion_api -- replicator
@@ -65,7 +67,7 @@ node "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
 
 annulus -- genus_api
 annulus -- block_api
-replicator - block_api
+block_api -- replicator
 execution -[hidden] DAML
 
 legend bottom left
