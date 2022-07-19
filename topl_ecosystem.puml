@@ -61,9 +61,8 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
     component "Other JMS\nmessage queue"  #LightCyan
   }
   subscription -- subscription_manager
-  subscription_manager -[hidden] extractor
   replicator -- gdb
-  extractor - replicator
+  replicator - extractor
   extractor -- MongoDb
   subscription_manager - MongoDb
 }
