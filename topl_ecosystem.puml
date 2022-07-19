@@ -65,6 +65,7 @@ node "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
 
 annulus -- genus_api
 annulus -- block_api
+replicator - block_api
 execution -[hidden] DAML
 
 legend bottom left

@@ -93,8 +93,8 @@ account |o...o{ addr : "Collection of\nsingle use\naddresses"
 asset_class }o.|| account
 asset_class ||..o{ asset_quantity
 asset_quantity }|..|| addr
-addr ||..o| prop
+addr |o..o| prop
 proof |o.||addr
-foreign ||..o| prop
+foreign |o..o| prop
 foreign ||..o| proof
 @enduml
