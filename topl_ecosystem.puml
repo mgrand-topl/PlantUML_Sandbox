@@ -44,7 +44,9 @@ dion -- dion_api
 tetra -- tetra_api
 
 node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("LightYellow", 2) {
-  component "Chain Replicator" as replicator #LightYellow
+  component "Chain Replicator" as replicator #LightYellow {
+    component "Brambl\n(client\nlibrary)" as b4 #lightgreen
+  }
   component "Transaction Extractor" as extractor #LightYellow
   interface "Genus\nsubscription\nAPI" as subscription #pink
   interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
@@ -56,7 +58,6 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
     component Kafka  #LightCyan
     component "Other JMS\nmessage queue"  #LightCyan
   }
-  component "Brambl\n(client\nlibrary)" as b4 #lightgreen
   subscription -- subscription_manager
   subscription_manager -[hidden] extractor
   replicator -- gdb
