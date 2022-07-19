@@ -25,7 +25,7 @@ node "Bifrost (blockchain node)" as bifrost %lighten("LightGreen", 15) {
 }
 
 node "Ribn (wallet)" as ribn %lighten("LightGreen", 15) {
-  component "Annulus\n(Web app\nBlockchain\nExplorer)" as annulus #lightgreen
+  component "Annulus\n(Blockchain\nExplorer)" as annulus #lightgreen
 
   component SDK #LightYellow {
     component "Brambl\n(client\nlibrary)" as b2 #lightgreen
