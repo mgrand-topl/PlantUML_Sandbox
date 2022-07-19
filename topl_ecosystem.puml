@@ -58,9 +58,11 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   }
   component "Brambl\n(client\nlibrary)" as b4 #lightgreen
   subscription -- subscription_manager
+  subscription_manager -[hidden] extractor
   replicator -- gdb
   extractor - replicator
   extractor -- MongoDb
+  subscription_manager - MongoDb
 }
 
 dion_api -- replicator
