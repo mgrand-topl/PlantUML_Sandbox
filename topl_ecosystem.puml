@@ -25,12 +25,12 @@ node "Bifrost (blockchain node)" as bifrost %lighten("LightGreen", 15) {
 }
 
 node "Ribn (wallet)" as ribn %lighten("LightGreen", 15) {
-  component "Annulus\n(Blockchain\nExplorer)" as annulus #lightgreen
-
   component SDK #LightYellow {
     component "Brambl\n(client\nlibrary)" as b2 #lightgreen
   }
 }
+
+node "Annulus\n(Blockchain\nExplorer)" as annulus #lightgreen
 
 SDK - dion_api
 SDK - tetra_api
@@ -49,7 +49,6 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   component "Chain Replicator" as replicator #LightYellow {
     component "Brambl\n(client\nlibrary)" as b4 #lightgreen
   }
-  component "Transaction Extractor" as extractor #LightYellow
   interface "Genus\nsubscription\nAPI" as subscription #pink
   interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
   interface "Genus\nblock\nAPI" as block_api #pink
@@ -62,8 +61,7 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   }
   subscription -- subscription_manager
   replicator -- gdb
-  replicator - extractor
-  extractor -- MongoDb
+  replicator -- MongoDb
   subscription_manager - MongoDb
 }
 
@@ -73,7 +71,7 @@ tetra_api -- replicator
 annulus -- genus_api
 annulus -- block_api
 block_api -- replicator
-genus_api -- extractor
+genus_api -- replicator
 execution -[hidden] DAML
 
 legend bottom left
