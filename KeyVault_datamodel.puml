@@ -61,6 +61,7 @@ entity "address" as addr  {
   *address_id : base58
   *"public_key" : base58
   *"private_key" : base58
+  *signature_algorithm : String
   description : String
 }
 
