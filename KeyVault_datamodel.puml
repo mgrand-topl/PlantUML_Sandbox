@@ -35,6 +35,10 @@ entity foreign_wallet {
   * verification_key: String
 }
 
+entity provider {
+  *provider_id
+}
+
 entity account  {
   *account_id : int32
   --
@@ -87,7 +91,10 @@ foreign }o..|{ addr
 wallet ||.o{ identity
 wallet ||..o{ account
 wallet ||..o{account_alias
+(wallet, account) . provider
+(wallet, account_alias) . provider
 foreign_wallet }o.|| wallet
+provider . (foreign_wallet, wallet)
 foreign_wallet ||..o{ foreign
 account||.o{account_alias
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
