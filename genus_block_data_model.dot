@@ -1,14 +1,25 @@
-digraph g {
+graph g {
   compound=true;
-  "Block Header" [label="Block Header"]
-  "Block Header":nw -> "Block Header":sw [label = "precedessor"];
-  "Block Header":ne -> "Block Header":se [arrowhead = "veevee", label = "successors"]
-  "Block Header" -> branch_label_1
-  "Block Header" -> transaction_1
+  "Block Header n" [label="Block Header n"]
+  "Block Header n-1" -- branch_label_1
+  "Block Header n-1" -- "Block Header n" [label = "precedessor"];
+  "Block Header n" -- "Block Header n+1" [label = "successor"]
+  "Block Header n" -- "Block Header n+1 " [label = "successor"]
+  "Block Header n" -- branch_label_1
+  "Block Header n" -- transaction_1
+  "Block Header n+1" -- branch_label_2
+  "Block Header n+1 " -- branch_label_3
 
   subgraph cluster00 {
     label = "Block Body"
-    transaction_1 -> transaction_2 -> "...";
+    transaction_1 -- transaction_2 -- "...";
   }
-  "Address_123, branch_label_1, state n" ->  {"Address_123, branch_label_1, state n+1" "Address_123, branch_label_1=2, state n+1"}
+  "Address_123, branch_label_0, state n" --  {"Address_123, branch_label_1, state n+1" "Address_123, branch_label_2, state n+1"}
+  "Address_123, branch_label_1, state n+1" -- transaction_1 [label="input"]
+  "Address_123, branch_label_1, state n+1" -- "Address_123, branch_label_1, state n+2"
+  transaction_1 -- "Address_123, branch_label_1, state n+2" [label = "output"]
+  transaction_2 -- "Address_123, branch_label_1, state n+2" [label="input"]
+  address_123 -- "Address_123, branch_label_1, state n+2"
+  "Address_345, branch_label_1, state 0" -- transaction_2 [label="output"]
+  "address_321" -- "Address_345, branch_label_1, state 0"
 }
