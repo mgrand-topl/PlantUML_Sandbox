@@ -87,7 +87,7 @@ entity "incomplete_proof" as proof  {
   *"proposition_hash" : base58
 }
 
-foreign }o..|{ addr
+foreign }o..|{ account
 wallet ||.o{ identity
 wallet ||..o{ account
 wallet ||..o{account_alias
