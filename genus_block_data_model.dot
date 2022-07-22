@@ -14,12 +14,16 @@ graph g {
     label = "Block Body"
     transaction_1 -- transaction_2 -- "...";
   }
+  {"Address_123, branch_label_0, state n, box1" "Address_123, branch_label_0, state n, box2"} -- "Address_123, branch_label_0, state n"
   "Address_123, branch_label_0, state n" --  {"Address_123, branch_label_1, state n+1" "Address_123, branch_label_2, state n+1"}
+  "Address_123, branch_label_1, state n+1" -- {"Address_123, branch_label_1, state n+1, box1" "Address_123, branch_label_1, state n+1, box2"}
+  "Address_123, branch_label_2, state n+1" -- {"Address_123, branch_label_2, state n+1, box1" "Address_123, branch_label_2, state n+1, box2"}
   "Address_123, branch_label_1, state n+1" -- transaction_1 [label="input"]
-  "Address_123, branch_label_1, state n+1" -- "Address_123, branch_label_1, state n+2"
+  "Address_123, branch_label_1, state n+1" -- "Address_123, branch_label_1, state n+2" -- {"Address_123, branch_label_1, state n+2, box1" "Address_123, branch_label_1, state n+2, box2"}
   transaction_1 -- "Address_123, branch_label_1, state n+2" [label = "output"]
   transaction_2 -- "Address_123, branch_label_1, state n+2" [label="input"]
   address_123 -- "Address_123, branch_label_1, state n+2"
   "Address_345, branch_label_1, state 0" -- transaction_2 [label="output"]
+  "Address_345, branch_label_1, state 0" -- {"Address_345, branch_label_1, state 0, box1" "Address_345, branch_label_1, state 0, box2"}
   "address_321" -- "Address_345, branch_label_1, state 0"
 }
