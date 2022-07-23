@@ -1,32 +1,56 @@
 graph g {
   ratio= 0.6;
   compound=true;
-  "Block Header n" [label="Block Header n"]
-  "Block Header n-1" -- branch_label_1
-  "Block Header n-1" -- "Block Header n" [label = "precedessor"];
-  "Block Header n" -- "Block Header n+1" [label = "successor"]
-  "Block Header n" -- "Block Header n+1 " [label = "successor"]
-  "Block Header n" -- branch_label_1
-  "Block Header n" -- transaction_1 [lhead=cluster0]
-  "Block Header n+1" -- branch_label_2
-  "Block Header n+1 " -- branch_label_3
+  "Block Header n,\nbranch_label_1" [color=tomato, style=filled]
+  "Block Header n-1,\nbranch_label_1" [color=tomato, style=filled]
+  "Block Header n-1,\nbranch_label_1"
+  "Block Header n-1,\nbranch_label_1" -- "Block Header n,\nbranch_label_1" [label = "precedessor"];
+  "Block Header n,\nbranch_label_1" -- "Block Header n+1,\nbranch_label_2" [label = "successor"]
+  "Block Header n,\nbranch_label_1" -- "Block Header n+1,\nbranch_label_3" [label = "successor"]
+  "Block Header n,\nbranch_label_1"
+  "Block Header n,\nbranch_label_1" -- transaction_1 [lhead=cluster0]
+  "Block Header n+1,\nbranch_label_2" [color=tomato, style=filled]
+  "Block Header n+1,\nbranch_label_2"
+  "Block Header n+1,\nbranch_label_3" [color=tomato, style=filled]
 
   subgraph cluster0 {
     label = "Block Body"
+    color=bisque
+    style=filled
+    "..." [color=palegreen, style=filled]
     transaction_1 -- transaction_2 -- "...";
   }
+  "Address_123,\nbranch_label_0,\nstate m, box1" [color=cyan2, style=filled]
+  "Address_123,\nbranch_label_0,\nstate m, box2" [color=cyan2, style=filled]
   {"Address_123,\nbranch_label_0,\nstate m, box1" "Address_123,\nbranch_label_0,\nstate m, box2"} -- "Address_123,\nbranch_label_0, state m"
+  "Address_123,\nbranch_label_0, state m" [color=skyblue, style=filled]
   "Address_123,\nbranch_label_0, state m" --  {"Address_123,\nbranch_label_1, state m+1" "Address_123,\nbranch_label_2, state m+1"}
+  "Address_123,\nbranch_label_1, state m+1" [color=skyblue, style=filled]
+  "Address_123,\nbranch_label_1,\nstate m+1, box1" [color=cyan2, style=filled]
+  "Address_123,\nbranch_label_1,\nstate m+1, box2" [color=cyan2, style=filled]
   "Address_123,\nbranch_label_1, state m+1" -- "Address_123,\nbranch_label_1,\nstate m+1, box1" [minlen="3"]
   "Address_123,\nbranch_label_1, state m+1" -- "Address_123,\nbranch_label_1,\nstate m+1, box2" [minlen="2"]
+  "Address_123,\nbranch_label_2,\nstate m+1, box1" [color=cyan2, style=filled]
+  "Address_123,\nbranch_label_2,\nstate m+1, box2" [color=cyan2, style=filled]
+  "Address_123,\nbranch_label_2, state m+1" [color=skyblue, style=filled]
   "Address_123,\nbranch_label_2, state m+1" -- "Address_123,\nbranch_label_2,\nstate m+1, box1" [minlen="3"]
   "Address_123,\nbranch_label_2, state m+1" -- "Address_123,\nbranch_label_2,\nstate m+1, box2"
   "Address_123,\nbranch_label_1, state m+1" -- transaction_1 [label="input"]
+  "Address_123,\nbranch_label_1,\nstate m+2, box1" [color=cyan2, style=filled]
+  "Address_123,\nbranch_label_1,\nstate m+2, box2" [color=cyan2, style=filled]
   "Address_123,\nbranch_label_1, state m+1" -- "Address_123,\nbranch_label_1, state m+2" -- {"Address_123,\nbranch_label_1,\nstate m+2, box1" "Address_123,\nbranch_label_1,\nstate m+2, box2"}
+  transaction_1 [color=palegreen, style=filled]
+  "Address_123,\nbranch_label_1, state m+2" [color=skyblue, style=filled]
   transaction_1 -- "Address_123,\nbranch_label_1, state m+2" [label = "output"]
+  transaction_2 [color=palegreen, style=filled]
   transaction_2 -- "Address_123,\nbranch_label_1, state m+2" [label="input"]
+  address_123 [color=violet, style=filled]
   address_123 -- "Address_123,\nbranch_label_1, state m+2"
+  "Address_345,\nbranch_label_1, state 0" [color=skyblue, style=filled]
   "Address_345,\nbranch_label_1, state 0" -- transaction_2 [label="output"]
+  "Address_345,\nbranch_label_1,\nstate 0, box1" [color=cyan2, style=filled]
+  "Address_345,\nbranch_label_1,\nstate 0, box2" [color=cyan2, style=filled]
   "Address_345,\nbranch_label_1, state 0" -- {"Address_345,\nbranch_label_1,\nstate 0, box1" "Address_345,\nbranch_label_1,\nstate 0, box2"}
-  "address_321" -- "Address_345,\nbranch_label_1, state 0"
+  "address_345" [color=violet, style=filled]
+  "address_345" -- "Address_345,\nbranch_label_1, state 0"
 }
