@@ -44,8 +44,8 @@ graph g {
   transaction_1 -- "Address_123,\nbranch_label_1, state m+2" [label = "output"]
   transaction_2 [color=palegreen, style=filled]
   transaction_2 -- "Address_123,\nbranch_label_1, state m+2" [label="input"]
-  address_123 [color=violet, style=filled]
-  address_123 -- "Address_123,\nbranch_label_1, state m+2"
+  Address_123 [color=violet, style=filled]
+  Address_123 -- "Address_123,\nbranch_label_1, state m+2"
   "Address_345,\nbranch_label_1, state 0" [color=skyblue, style=filled]
   "Address_345,\nbranch_label_1, state 0" -- transaction_2 [label="output"]
   "Address_345,\nbranch_label_1,\nstate 0, box1" [color=cyan2, style=filled]
@@ -53,4 +53,14 @@ graph g {
   "Address_345,\nbranch_label_1, state 0" -- {"Address_345,\nbranch_label_1,\nstate 0, box1" "Address_345,\nbranch_label_1,\nstate 0, box2"}
   "address_345" [color=violet, style=filled]
   "address_345" -- "Address_345,\nbranch_label_1, state 0"
+  subgraph cluster_legend {
+    label=Legend
+    fontsize=18
+    Transaction [color=palegreen, style=filled]
+    Box [color=cyan2, style=filled]
+    Block_body [color=bisque, style=filled]
+    Block_Header [color=tomato, style=filled]
+    Address_State [color=skyblue, style=filled]
+    Address [color=violet, style=filled]
+  }
 }
