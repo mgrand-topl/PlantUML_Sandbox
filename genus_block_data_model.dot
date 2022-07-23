@@ -7,11 +7,11 @@ graph g {
   "Block Header n" -- "Block Header n+1" [label = "successor"]
   "Block Header n" -- "Block Header n+1 " [label = "successor"]
   "Block Header n" -- branch_label_1
-  "Block Header n" -- transaction_1
+  "Block Header n" -- transaction_1 [lhead=cluster0]
   "Block Header n+1" -- branch_label_2
   "Block Header n+1 " -- branch_label_3
 
-  subgraph cluster00 {
+  subgraph cluster0 {
     label = "Block Body"
     transaction_1 -- transaction_2 -- "...";
   }
