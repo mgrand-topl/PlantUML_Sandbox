@@ -15,7 +15,7 @@ graph g {
 
   subgraph cluster0 {
     label = "Block Body"
-    color=bisque
+    color=gray93
     style=filled
     "..." [color=palegreen, style=filled]
     transaction_1 -- transaction_2 -- "...";
@@ -58,7 +58,7 @@ graph g {
     fontsize=18
     Transaction [color=palegreen, style=filled]
     Box [color=cyan2, style=filled]
-    Block_body [color=bisque, style=filled]
+    Block_body [color=gray93, style=filled]
     Block_Header [color=tomato, style=filled]
     Address_State [color=skyblue, style=filled]
     Address [color=violet, style=filled]
