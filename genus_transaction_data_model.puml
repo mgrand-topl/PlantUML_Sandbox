@@ -16,6 +16,8 @@ entity box {
 *output_index : u16
 --
 *asset_class : String
+*creation_time : String
+*address : String
 security_root : String
 metadata : String
 consuming_transaction_id : String
@@ -27,6 +29,9 @@ entity transaction {
 *transaction_id : String
 *branch_label : String
 --
+*creation_time : String
+*input_count : u16
+*output_count : u16
 }
 
 transaction ||--|{ box : inputs
