@@ -1,0 +1,29 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+skinparam class {
+BackgroundColor LightYellow
+}
+
+entity box {
+*transaction_id : String
+*output_index : u16
+--
+*asset_class : String
+security_root : String
+metadata : String
+}
+
+entity transaction {
+*transaction_id : String
+--
+}
+
+transaction ||--|{ box : inputs
+transaction ||--|{ box : outputs
+@enduml
