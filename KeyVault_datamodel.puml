@@ -35,8 +35,8 @@ entity foreign_wallet {
   * verification_key: String
 }
 
-entity provider {
-  *provider_id
+entity credential_set {
+  *credential_set_id
 }
 
 entity account  {
@@ -91,10 +91,10 @@ foreign }o..|{ account
 wallet ||.o{ identity
 wallet ||..o{ account
 wallet ||..o{account_alias
-(wallet, account) . provider
-(wallet, account_alias) . provider
-foreign_wallet }o.|| wallet
-provider . (foreign_wallet, wallet)
+(wallet, account) . credential_set
+(wallet, account_alias) . credential_set
+foreign_wallet }o..|| wallet
+credential_set . (foreign_wallet, wallet)
 foreign_wallet ||..o{ foreign
 account||.o{account_alias
 account |o...o{ addr : "Collection of\nsingle use\naddresses"
@@ -105,4 +105,5 @@ addr |o..o| prop
 proof |o.||addr
 foreign |o..o| prop
 foreign ||..o| proof
+credential_set -[hidden] foreign
 @enduml
