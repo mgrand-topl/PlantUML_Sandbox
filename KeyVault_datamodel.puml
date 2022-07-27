@@ -39,6 +39,12 @@ entity credential_set {
   *credential_set_id
 }
 
+entity application {
+  *id : UUID
+  --
+  *application_name
+}
+
 entity account  {
   *account_id : int32
   --
@@ -89,11 +95,11 @@ entity "incomplete_proof" as proof  {
 
 foreign }o..|{ account
 wallet ||.o{ identity
-wallet ||..o{ account
-wallet ||..o{account_alias
-(wallet, account) . credential_set
-(wallet, account_alias) . credential_set
-foreign_wallet }o..|| wallet
+wallet ||.o{ application
+application ||..o{ account
+account_alias}o..||application
+(wallet, application) . credential_set
+wallet ||..o{ foreign_wallet
 credential_set . (foreign_wallet, wallet)
 foreign_wallet ||..o{ foreign
 account||.o{account_alias
