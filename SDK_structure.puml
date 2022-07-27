@@ -1,6 +1,4 @@
 @startuml
-'https://plantuml.com/component-diagram
-
 node "SDK" #lightyellow {
   interface "genus\ninterface" as genus
   interface "blockchain\ninterface" as block
@@ -14,5 +12,4 @@ node "SDK" #lightyellow {
 
 database "Keyvault File" as keyvault {
 }
-
 @enduml
