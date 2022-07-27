@@ -1,0 +1,34 @@
+@startuml
+|#palegreen|a|Application
+start
+:Begin construction
+of transfer transaction;
+fork
+:Get next unused address
+from wallet to use for
+untransferred assets;
+fork again
+|#AntiqueWhite|Genus|
+:Query Genus Blockchain API
+for current address of assets;
+|a|
+endfork
+:Construct proven transaction;
+:broadcast transaction;
+fork
+:Query Genus for the
+completed transaction;
+fork again
+|#lightblue|Topl Network|
+:Commit transaction
+on blockchain;
+|Genus|
+:Genus discovers the block
+that contains the transaction;
+:The transaction becomes visible
+in the Genus ;
+endfork
+|a|
+:Application updates wallet with addresses of assets;
+stop
+@enduml
