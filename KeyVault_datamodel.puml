@@ -76,7 +76,7 @@ entity "address" as addr  {
 }
 
 entity box {
-  sequence_number : u16
+  box_id : String
   --
   asset_class : String
   quantity : Int128
