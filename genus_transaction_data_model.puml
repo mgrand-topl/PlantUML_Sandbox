@@ -20,7 +20,6 @@ entity box {
 security_root : String
 metadata : String
 consuming_transaction_id : String
-consuming_branch_label : String
 input_index : u16
 }
 
