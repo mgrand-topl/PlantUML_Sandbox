@@ -26,7 +26,6 @@ input_index : u16
 
 entity transaction {
 *transaction_id : String
-*branch_label : String
 --
 *creation_time : String
 *input_count : u16
