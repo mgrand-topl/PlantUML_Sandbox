@@ -31,7 +31,8 @@ graph g {
   }
   "Address_123,\nstate m, box1" [color=cyan2, style=filled]
   "Address_123,\nstate m, box2" [color=cyan2, style=filled]
-  {"Address_123,\nstate m, box1" "Address_123,\nstate m, box2"} -- "Address_123, state m"
+  "Address_123,\nstate m, box3" [color=cyan2, style=filled]
+  {"Address_123,\nstate m, box1" "Address_123,\nstate m, box2" "Address_123,\nstate m, box3"} -- "Address_123, state m"
   "Address_123, state m" [color=skyblue, style=filled]
   "Address_123, state m" -- "Address_123, state m+1"
   "Address_123, state m+1" [color=skyblue, style=filled]
