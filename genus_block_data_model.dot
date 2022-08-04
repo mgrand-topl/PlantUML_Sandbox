@@ -37,7 +37,7 @@ graph g {
   "Address_123, state m+1" [color=skyblue, style=filled]
   "Address_123,\nstate m+1, box1" [color=cyan2, style=filled]
   "Address_123,\nstate m+1, box2" [color=cyan2, style=filled]
-  "Address_123, state m+1" -- "Address_123,\nstate m+1, box1"
+  "Address_123,\nstate m+1, box1" -- "Address_123, state m+1"
   "Address_123, state m+1" -- "Address_123,\nstate m+1, box2"
   "Address_123, state m+1" -- transaction_1 [label="input"]
   "Address_123,\nstate m+2, box1" [color=cyan2, style=filled]
