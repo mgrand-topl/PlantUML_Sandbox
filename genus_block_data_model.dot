@@ -50,6 +50,10 @@ graph g {
   transaction_2 -- "Address_123,\nstate m+2, box2" [label="input"]
   Address_123 [color=violet, style=filled]
   Address_123 -- "Address_123, state m+2"
+  "Address_123, state m+3" [color=skyblue, style=filled]
+  "Address_123, state m+2" -- "Address_123, state m+3"
+  "Address_123, state m+3" -- "Address_123,\nstate m+3, box1"
+  "Address_123,\nstate m+3, box1" [color=cyan2, style=filled]
   "Address_345, state 0" [color=skyblue, style=filled]
   "Address_345,\nstate 0, box1" -- transaction_2 [label="output"]
   "Address_345,\nstate 0, box2" -- transaction_2 [label="output"]
