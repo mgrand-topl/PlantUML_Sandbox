@@ -52,17 +52,15 @@ node "Genus (outbound transaction\nand block propagation)" as Genus %lighten("Li
   interface "Genus\nsubscription\nAPI" as subscription #pink
   interface "Genus\ntransaction\nAPI" as genus_api #LightYellow
   interface "Genus\nblock\nAPI" as block_api #pink
-  database "MongoDb\ntransaction\nmirror" as MongoDb #LightCyan
   database "Graph\ndatabase\nblock mirror" as gdb #LightCyan
   component subscription_manager #LightYellow {
     component RabitMQ  #LightCyan
     component Kafka  #LightCyan
     component "Other JMS\nmessage queue"  #LightCyan
   }
-  subscription -- subscription_manager
-  replicator -- gdb
-  replicator -- MongoDb
-  subscription_manager - MongoDb
+  subscription - subscription_manager
+  gdb - replicator
+  gdb -- subscription_manager
 }
 
 dion_api -- replicator
@@ -70,8 +68,8 @@ tetra_api -- replicator
 
 annulus -- genus_api
 annulus -- block_api
-block_api -- replicator
-genus_api -- replicator
+block_api -- gdb
+genus_api -- gdb
 execution -[hidden] DAML
 
 legend bottom left
