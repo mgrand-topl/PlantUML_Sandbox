@@ -4,26 +4,57 @@ skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
 
+skinparam Legend {
+    BackgroundColor #FFFFFF
+    FontColor #000000
+}
+
 title Topl Dependencies and Repos
+
+cloud Docker_Hub {
+  component bifrost_node_image
+}
+
 cloud GitHub {
   Collections "bifrost_grpc" as bg
   Collections bifrost_grpc_wrapper_dart_source
   Collections bifrost
-  Collections SDK
+  Collections SDK_scala
+  Collections genus_grpc
 }
 cloud maven_central {
   component bifrost_grpc_scala
+  component genus_grpc_scala
+  component SDK_scala as SDK_scala.jar
+  component bifrost_node
 }
 cloud pub.dev {
   component bifrost_grpc_dart
   component bifrost_grpc_wrapper_dart
+  component genus_grpc_dart
 }
-bg -[#blue,thickness=2]> bifrost_grpc_scala
+bifrost_grpc_scala <-[#blue,thickness=2]- bg
 bg -[#blue,thickness=2]-> bifrost_grpc_dart
-bifrost_grpc_dart -[#red,dotted,thickness=3]> bifrost_grpc_wrapper_dart
-bifrost_grpc_dart -[#red,dotted,thickness=3]> bifrost_grpc_wrapper_dart_source
+bifrost_grpc_dart -[#red,dotted,thickness=3]-> bifrost_grpc_wrapper_dart
+bifrost_grpc_dart -[#red,dotted,thickness=3]-> bifrost_grpc_wrapper_dart_source
 bifrost_grpc_wrapper_dart_source -[#blue,thickness=2]-> bifrost_grpc_wrapper_dart
-bifrost_grpc_scala -[#red,dotted,thickness=3]> bifrost
+bifrost_grpc_scala -[#green,dashed,thickness=3]-> bifrost
+bifrost_grpc_scala -[#red,dotted,thickness=3]-> SDK_scala
+genus_grpc -[#blue,thickness=2]-> genus_grpc_scala
+genus_grpc_scala -[#red,dotted,thickness=3]-> SDK_scala
+SDK_scala -[#blue,thickness=2]-> SDK_scala.jar
+bifrost -[#blue,thickness=2]-> bifrost_node
+bifrost_node_image <-[#blue,thickness=2]- bifrost_node
 
-GitHub -- maven_central
+
+maven_central -[hidden]- GitHub
+GitHub -[hidden]----- pub.dev
+
+legend bottom left
+  | Color | Status |
+  | <color:#green> - - -| Submodule |
+  | <color:#blue> ____\n| created from |
+  | <color:red> ::::\n | transitive dependency |
+end legend
+
 @enduml
