@@ -1,0 +1,29 @@
+@startuml
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title Topl Dependencies and Repos
+cloud GitHub {
+  Collections "bifrost_grpc" as bg
+  Collections bifrost_grpc_wrapper_dart_source
+  Collections bifrost
+  Collections SDK
+}
+cloud maven_central {
+  component bifrost_grpc_scala
+}
+cloud pub.dev {
+  component bifrost_grpc_dart
+  component bifrost_grpc_wrapper_dart
+}
+bg -[#blue,thickness=2]> bifrost_grpc_scala
+bg -[#blue,thickness=2]-> bifrost_grpc_dart
+bifrost_grpc_dart -[#red,dotted,thickness=3]> bifrost_grpc_wrapper_dart
+bifrost_grpc_dart -[#red,dotted,thickness=3]> bifrost_grpc_wrapper_dart_source
+bifrost_grpc_wrapper_dart_source -[#blue,thickness=2]-> bifrost_grpc_wrapper_dart
+bifrost_grpc_scala -[#red,dotted,thickness=3]> bifrost
+
+GitHub -- maven_central
+@enduml
