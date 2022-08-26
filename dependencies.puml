@@ -13,6 +13,7 @@ title Topl Dependencies and Repos
 
 cloud Docker_Hub {
   component bifrost_node_image
+  component genus_image
 }
 
 cloud GitHub {
@@ -20,39 +21,49 @@ cloud GitHub {
   Collections bifrost_grpc_wrapper_dart_source
   Collections bifrost
   Collections SDK_scala
+  Collections SDK_dart
   Collections genus_grpc
+  Collections genus
 }
 cloud maven_central {
   component bifrost_grpc_scala
   component genus_grpc_scala
   component SDK_scala as SDK_scala.jar
   component bifrost_node
+  component genus as genus_lib
 }
 cloud pub.dev {
   component bifrost_grpc_dart
   component bifrost_grpc_wrapper_dart
   component genus_grpc_dart
+  component SDK_dart as SDK_dart_lib
 }
 bifrost_grpc_scala <-[#blue,thickness=2]- bg
 bg -[#blue,thickness=2]-> bifrost_grpc_dart
 bifrost_grpc_dart -[#red,dotted,thickness=3]-> bifrost_grpc_wrapper_dart
 bifrost_grpc_dart -[#red,dotted,thickness=3]-> bifrost_grpc_wrapper_dart_source
 bifrost_grpc_wrapper_dart_source -[#blue,thickness=2]-> bifrost_grpc_wrapper_dart
-bifrost_grpc_scala -[#green,dashed,thickness=3]-> bifrost
+bifrost_grpc_scala -[#red,dotted,thickness=3]-> bifrost
 bifrost_grpc_scala -[#red,dotted,thickness=3]-> SDK_scala
 genus_grpc -[#blue,thickness=2]-> genus_grpc_scala
 genus_grpc_scala -[#red,dotted,thickness=3]-> SDK_scala
 SDK_scala -[#blue,thickness=2]-> SDK_scala.jar
 bifrost -[#blue,thickness=2]-> bifrost_node
 bifrost_node_image <-[#blue,thickness=2]- bifrost_node
-
+genus_grpc -[#blue,thickness=2]-> genus_grpc_dart
+genus_grpc_dart -[#red,dotted,thickness=3]-> SDK_dart
+SDK_dart <-[#red,dotted,thickness=3]- bifrost_grpc_wrapper_dart
+SDK_dart -[#blue,thickness=2]-> SDK_dart_lib
+genus_grpc_scala -[#red,dotted,thickness=3]-> genus
+bifrost_grpc_scala -[#red,dotted,thickness=3]-> genus
+genus_lib <-[#blue,thickness=2]- genus
+genus_image <-[#blue,thickness=2]- genus_lib
 
 maven_central -[hidden]- GitHub
 GitHub -[hidden]----- pub.dev
 
 legend bottom left
   | Color | Status |
-  | <color:#green> - - -| Submodule |
   | <color:#blue> ____\n| created from |
   | <color:red> ::::\n | transitive dependency |
 end legend
