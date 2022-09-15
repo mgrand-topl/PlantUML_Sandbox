@@ -1,0 +1,18 @@
+@startuml
+autonumber
+autoactivate on
+actor user
+participant "EZ_API:client" as client
+participant "__Provider:mainnet__" as mainnet
+database LevelDbWallet
+user ->client: open(mainnet)
+  client -> WalletFactory: open(mainnet)
+    WalletFactory -> mainnet: getNetworkId
+    return networkId
+
+    create LevelDbWallet
+    WalletFactory -> LevelDbWallet : constructor(networkId)
+    return
+  return
+return
+@enduml
