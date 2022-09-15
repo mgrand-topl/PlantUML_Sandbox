@@ -1,18 +1,50 @@
 @startuml
+skinparam sequence {
+  LifeLineBackgroundColor #FFBBBB
+}
+
 autonumber
 autoactivate on
 actor user
 participant "EZ_API:client" as client
+participant "LevelDbWallet:wallet" as wallet
+database levelDB
+participant "Account:a1" as a1
 participant "__Provider:mainnet__" as mainnet
-database LevelDbWallet
 user ->client: open(mainnet)
   client -> WalletFactory: open(mainnet)
     WalletFactory -> mainnet: getNetworkId
     return networkId
 
-    create LevelDbWallet
-    WalletFactory -> LevelDbWallet : constructor(networkId)
-    return
-  return
+    create wallet
+    WalletFactory -> wallet : constructor(networkId)
+      create levelDB
+      wallet -> levelDB : constructor
+      return levelDB
+
+      wallet -> levelDB : getCredentialSet
+      return credentialSet
+    return wallet
+
+  return wallet
 return
+newpage a1 = wallet.createAccount(name = "A1")
+user -> wallet : createAccount("A1")
+  wallet -> wallet : nextXIndex(0)
+    wallet -> levelDB : getXRecord(0)
+    return
+
+    wallet -> levelDB : updateXRecord(0)
+    return
+  return indexValue
+
+  wallet -> levelDB : writeYrecord(0,indexValue)
+  return
+
+  create a1
+  wallet -> a1 : constructor
+  return a1
+return a1
+
+newpage client.registerAssetType( assetClass = Asset.NFT(label = "nft0"), alias = “NFT0”, account = “A1”, fee = Topl.input(quantity = 200, account="fees", assetType = "nanopolys"))
 @enduml
