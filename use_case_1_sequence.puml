@@ -9,7 +9,8 @@ actor user
 participant "EZ_API:client" as client
 participant "LevelDbWallet:wallet" as wallet
 database levelDB
-participant "Account:a1" as a1
+participant "Y:a1" as a1
+participant "Y:fees" as fees
 participant "__Provider:mainnet__" as mainnet
 user ->client: open(mainnet)
   client -> WalletFactory: open(mainnet)
@@ -46,5 +47,26 @@ user -> wallet : createAccount("A1")
   return a1
 return a1
 
-newpage client.registerAssetType( assetClass = Asset.NFT(label = "nft0"), alias = “NFT0”, account = “A1”, fee = Topl.input(quantity = 200, account="fees", assetType = "nanopolys"))
+newpage client.transaction( fee = Topl.input( quantity = 200, account="fees", assetType = "nanopolys"), input = Topl.input( account = a1, assetType = "NFT0"), output = Topl.output( assetType = "NFT0", account =  a2))
+user -> client : input(quantity=200,\n         account="fees",\n         assetType="nanopolys")
+  client -> wallet : getYByName("fees")
+  return fees
+
+  client -> fees : updateBoxStates()
+    opt if box states are stale
+      fees -> GenusClient : getBoxesByAddress
+      return the boxes associated with the addresses under fees
+
+      fees -> wallet : updateBoxStates
+
+    end opt
+  return
+
+  client -> fees : getAddressByAssetLabel("nanopolys")
+  return sequence of addresses
+
+  client -> client : selectBoxesToTotal("nanopolys", 200)
+  return sequence of boxes and an\noptional change quantity.
+
+return sequence of inputs and an\noptional output for change
 @enduml
