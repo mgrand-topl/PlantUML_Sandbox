@@ -1,0 +1,85 @@
+@startuml
+skinparam sequence {
+  LifeLineBackgroundColor #FFBBBB
+}
+
+autonumber
+autoactivate on
+actor user
+participant "EZ_API:client" as client
+participant "LevelDbWallet:wallet" as wallet
+database levelDB
+participant "Y:a1" as a1
+participant "Y:fees" as fees
+participant "Y:nft0" as nft0
+participant "__Provider:mainnet__" as mainnet
+title a1 = wallet.createAccount(name = "A1")
+user -> wallet : createAccount("A1")
+  wallet -> wallet : nextXIndex(0)
+    wallet -> levelDB : getXRecord(0)
+    return
+
+    wallet -> levelDB : updateXRecord(0)
+    return
+  return indexValue
+
+  wallet -> levelDB : writeYrecord(0,indexValue)
+  return <nothing>
+
+  create a1
+  wallet -> a1 : constructor
+  return a1
+return a1
+
+newpage client.transaction( fee = Topl.input( quantity = 200, account="fees", assetType = "nanopolys"), input = Topl.input( account = a1, assetType = "NFT0"), output = Topl.output( assetType = "NFT0", account =  a2))
+user -> client : input(quantity=200,\n         account="fees",\n         assetType="nanopolys")
+  client -> wallet : getYByName("fees")
+    wallet -> wallet : getXRecord
+      wallet -> levelDB : read
+      return x record
+    return
+    wallet -> levelDB : read
+    return y record
+  return fees
+
+  client -> fees : updateBoxStates()
+    opt if box states are stale
+      fees -> GenusClient : getBoxesByAddress
+      return the boxes associated with the addresses under fees
+
+      fees -> wallet : updateBoxStates
+      return
+    end opt
+  return
+
+  client -> fees : getAddressByAssetLabel("nanopolys", 200)
+  return sequence of boxes categorized as spend, change or split
+return sequence of inputs and an optional output for change
+
+user -> client : input(account = a1, assetType = "NFT0")
+  client -> wallet : getYByName("NFT0")
+  return nft0
+
+  client -> fees : updateBoxStates()
+  return
+
+  client -> fees : getAddressByAssetLabel("NFT0")
+  return sequence of boxes categorized as spend, change or split.
+return sequence of inputs and optional change outputs
+
+user -> client : output(assetType = "NFT0", account = a2)
+  client -> wallet : getNextAddress
+    wallet -> wallet : writeZrecord
+      wallet -> levelDB : write
+      return
+    return
+  return an unused address
+return an Unquantified output
+
+user -> client : transaction(inputs, outputs, unquantifiedOutputs)
+  client -> client : matchUnassignedInputsToUnquantifiedOutputs(inputs, outputs, unquantifiedOutputs)
+  return outputs replacing unquantifiedOutputs
+return unprovenTransaction
+
+
+@enduml
