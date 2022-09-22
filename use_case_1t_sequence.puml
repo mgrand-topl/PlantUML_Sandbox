@@ -10,29 +10,11 @@ participant "EZ_API:client" as client
 participant "LevelDbWallet:wallet" as wallet
 database levelDB
 participant "Y:a1" as a1
+participant "Y:a2" as a2
 participant "Y:fees" as fees
-participant "Y:nft0" as nft0
-participant "__Provider:mainnet__" as mainnet
-title a1 = wallet.createAccount(name = "A1")
-user -> wallet : createAccount("A1")
-  wallet -> wallet : nextXIndex(0)
-    wallet -> levelDB : getXRecord(0)
-    return
-
-    wallet -> levelDB : updateXRecord(0)
-    return
-  return indexValue
-
-  wallet -> levelDB : writeYrecord(0,indexValue)
-  return <nothing>
-
-  create a1
-  wallet -> a1 : constructor
-  return a1
-return a1
-
-newpage client.transaction( fee = Topl.input( quantity = 200, account="fees", assetType = "nanopolys"), input = Topl.input( account = a1, assetType = "NFT0"), output = Topl.output( assetType = "NFT0", account =  a2))
-user -> client : input(quantity=200,\n         account="fees",\n         assetType="nanopolys")
+participant "AssetManager"
+title client.transaction( fee = Topl.input( quantity = 200, account="fees", assetType = "nanolvl"), input = Topl.input( account = a1, assetType = "NFT0"), output = Topl.output( assetType = "NFT0", account =  a2))
+user -> client : input(quantity=200,\n         account="fees",\n         assetType="nanolvl")
   client -> wallet : getYByName("fees")
     wallet -> wallet : getXRecord
       wallet -> levelDB : read
@@ -40,9 +22,16 @@ user -> client : input(quantity=200,\n         account="fees",\n         assetTy
     return
     wallet -> levelDB : read
     return y record
+
+    create fees
+    wallet -> fees : constructor
+    return fees
   return fees
 
   client -> fees : updateBoxStates()
+
+    fees -> fees : boxesAreStale
+    return true or false
     opt if box states are stale
       fees -> GenusClient : getBoxesByAddress
       return the boxes associated with\nthe addresses under fees
@@ -52,7 +41,7 @@ user -> client : input(quantity=200,\n         account="fees",\n         assetTy
     end opt
   return
 
-  client -> fees : getAddressByAssetLabel("nanopolys", 200)
+  client -> fees : getAddressByAssetLabel("nanolvl", 200)
   return sequence of boxes categorized as spend, change or split
 return sequence of inputs annotated\nwith addresses and an\noptional output for change
 
