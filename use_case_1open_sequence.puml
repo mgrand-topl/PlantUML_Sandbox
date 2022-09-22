@@ -2,7 +2,7 @@
 skinparam sequence {
   LifeLineBackgroundColor #FFBBBB
 }
-
+title Open Wallet
 autonumber
 autoactivate on
 actor user

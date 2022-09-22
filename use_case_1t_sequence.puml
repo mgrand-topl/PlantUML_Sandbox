@@ -45,7 +45,7 @@ user -> client : input(quantity=200,\n         account="fees",\n         assetTy
   client -> fees : updateBoxStates()
     opt if box states are stale
       fees -> GenusClient : getBoxesByAddress
-      return the boxes associated with the addresses under fees
+      return the boxes associated with\nthe addresses under fees
 
       fees -> wallet : updateBoxStates
       return
@@ -54,9 +54,9 @@ user -> client : input(quantity=200,\n         account="fees",\n         assetTy
 
   client -> fees : getAddressByAssetLabel("nanopolys", 200)
   return sequence of boxes categorized as spend, change or split
-return sequence of inputs and an optional output for change
+return sequence of inputs annotated\nwith addresses and an\noptional output for change
 
-user -> client : input(account = a1, assetType = "NFT0")
+user -> client : input(account = a1,\n         assetType = "NFT0")
   client -> wallet : getYByName("NFT0")
   return nft0
 
@@ -65,9 +65,9 @@ user -> client : input(account = a1, assetType = "NFT0")
 
   client -> fees : getAddressByAssetLabel("NFT0")
   return sequence of boxes categorized as spend, change or split.
-return sequence of inputs and optional change outputs
+return sequence of inputs and\noptional change outputs
 
-user -> client : output(assetType = "NFT0", account = a2)
+user -> client : output(assetType = "NFT0",\n           account = a2)
   client -> wallet : getNextAddress
     wallet -> wallet : writeZrecord
       wallet -> levelDB : write
@@ -76,10 +76,15 @@ user -> client : output(assetType = "NFT0", account = a2)
   return an unused address
 return an Unquantified output
 
-user -> client : transaction(inputs, outputs, unquantifiedOutputs)
-  client -> client : matchUnassignedInputsToUnquantifiedOutputs(inputs, outputs, unquantifiedOutputs)
+user -> client : transaction(inputs, outputs,\n                 unquantifiedOutputs)
+  client -> client : matchUnassignedInputsToUnquantifiedOutputs(\n               inputs, outputs, unquantifiedOutputs)
   return outputs replacing unquantifiedOutputs
-return unprovenTransaction
 
-
+  loop for each input annotated with address
+      client -> client : sign(input annotated with address)
+        client -> Address : getPrivateKey()
+        return private signing getPrivateKey
+      return finished input and signature
+  end loop
+return Transaction
 @enduml
