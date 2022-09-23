@@ -1,0 +1,25 @@
+@startuml
+hide empty members
+
+Interface BifrostTetraClient <<interface>>
+
+Interface MessageDigester <<interface>>
+
+interface Result<SuccessType, FaulureType> <<interface>> {
+--
+isSuccess
+}
+
+class Failure<SuccessType, FaulureType>
+Result <|--Failure
+
+class Success<SuccessType, FaulureType>
+Result <|--Success
+
+BifrostTetraClient <|.. BifrostClient
+
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+@enduml
