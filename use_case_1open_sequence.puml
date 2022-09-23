@@ -9,8 +9,8 @@ actor user
 participant "EZ_API:client" as client
 participant "LevelDbWallet:wallet" as wallet
 database levelDB
-participant "__Provider:mainnet__" as mainnet
-user ->client: open(mainnet)
+participant "__BlockchainNetwork:mainnet__" as mainnet
+user ->client: open(mainnet, password)
   client -> WalletFactory: open(mainnet)
     WalletFactory -> mainnet: getNetworkId
     return networkId

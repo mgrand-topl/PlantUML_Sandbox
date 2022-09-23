@@ -1,6 +1,9 @@
 @startuml
 hide empty members
 page 1x3
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
 
 Interface BifrostTetraClient <<interface>>
 
@@ -11,11 +14,38 @@ interface Result<SuccessType, FaulureType> <<interface>> {
 isSuccess
 }
 
-class Failure<SuccessType, FaulureType>
-Result <|--Failure
+class Failure<SuccessType, FaulureType> implements Result
 
-class Success<SuccessType, FaulureType>
-Result <|--Success
+class Success<SuccessType, FaulureType> implements Result
+
+Interface IndexedObject {
+  getPath
+}
+
+interface ParticipantEntity extends IndexedObject
+
+interface ContractAccount extends IndexedObject
+
+interface Address extends IndexedObject
+
+interface SupplyPolicy
+
+interface Proof
+
+interface Proposition
+
+interface Provider
+
+interface StagedFuture {
+  settled : Future
+  submission : Future
+}
+
+class Box
+
+class AddressableBox
+AddressableBox --> "1 " Box
+AddressableBox --> " 1" Address
 
 class MessageDigesterFactory <<utility>>  {
 --
@@ -25,7 +55,7 @@ blake2b384Digester
 ...
 }
 
-MessageDigesterFactory .> MessageDigester
+MessageDigesterFactory .> MessageDigester : creates
 MessageDigester <|.. Blake2b160Digester
 MessageDigester <|... Blake2b256Digester
 MessageDigester <|.... Blake2b384Digester
