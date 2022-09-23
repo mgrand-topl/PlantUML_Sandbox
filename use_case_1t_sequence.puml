@@ -58,7 +58,7 @@ user -> client : input(account = a1,\n         assetType = "NFT0")
   client -> AssetManager : getAssetLabel("NFT0")
   return nft0AssetLabel
   client -> a1 : getAddressByAssetLabel(nft0AssetLabel)
-  return sequence of boxes categorized as spend, change or split.
+  return sequence of boxes all categorized as spend.
 return sequence of inputs and\noptional change outputs
 
 user -> client : output(assetType = "NFT0",\n           account = a2)
@@ -66,12 +66,13 @@ user -> client : output(assetType = "NFT0",\n           account = a2)
     a2 -> a2 : writeZRecord
       a2 -> levelDB : write
       return
+
     return
+
+  return an unused address
 
   client -> AssetManager : getAssetLabel("NFT0")
   return nft0AssetLabel
-
-  return an unused address
 return an Unquantified output
 
 user -> client : transaction(inputs, outputs,\n                 unquantifiedOutputs)
