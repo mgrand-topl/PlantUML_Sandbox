@@ -1,5 +1,6 @@
 @startuml
 hide empty members
+page 1x3
 
 Interface BifrostTetraClient <<interface>>
 
@@ -16,10 +17,43 @@ Result <|--Failure
 class Success<SuccessType, FaulureType>
 Result <|--Success
 
+class MessageDigesterFactory <<utility>>  {
+--
+blake2b160Digester
+blake2b256Digester
+blake2b384Digester
+...
+}
+
+MessageDigesterFactory .> MessageDigester
+MessageDigester <|.. Blake2b160Digester
+MessageDigester <|... Blake2b256Digester
+MessageDigester <|.... Blake2b384Digester
+MessageDigester <|..... Blake2b512Digester
+MessageDigester <|...... Blake2s128Digester
+MessageDigester <|....... Blake2s160Digester
+MessageDigester <|........ Blake2s224Digester
+MessageDigester <|....... Blake2s256Digester
+MessageDigester <|....... Blake3_256Digester
+MessageDigester <|...... DSTU7564_256Digester
+MessageDigester <|..... DSTU7564_384Digester
+MessageDigester <|... DSTU7564_512Digester
+MessageDigester <|.. RIPEMD_128Digester
+MessageDigester <|.... RIPEMD_160Digester
+MessageDigester <|..... RIPEMD_256Digester
+MessageDigester <|...... RIPEMD_320Digester
+MessageDigester <|....... SHA1Digester
+MessageDigester <|....... SHA2_224Digester
+MessageDigester <|........ SHA2_256Digester
+MessageDigester <|....... SHA2_384Digester
+MessageDigester <|...... SHA2_512Digester
+MessageDigester <|..... SHA3_224Digester
+MessageDigester <|.... SHA3_256Digester
+MessageDigester <|... SHA3_512Digester
+MessageDigester <|.. WhirlpoolDigester
+
 BifrostTetraClient <|.. BifrostClient
 
 Class03 *-- Class04
 Class05 o-- Class06
-Class07 .. Class08
-Class09 -- Class10
 @enduml
